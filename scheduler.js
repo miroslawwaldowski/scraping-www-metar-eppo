@@ -3,13 +3,11 @@ const $ = require("cheerio");
 const url = "https://pl.allmetsat.com/metar-taf/polska.php?icao=EPPO";
 const fs = require("fs");
 
-var logger = fs.createWriteStream("log.txt", {
-  flags: "a", // 'a' means appending (old data will be preserved)
-});
-console.log("test");
-
 async function readWeb() {
   console.log("readWeb");
+  var logger = fs.createWriteStream("log.txt", {
+    flags: "a", // 'a' means appending (old data will be preserved)
+  });
   const browser = await puppeteer.launch({
     headless: true,
     defaultViewport: null,
