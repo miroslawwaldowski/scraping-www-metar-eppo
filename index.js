@@ -15,6 +15,7 @@ var logger = fs.createWriteStream("log.txt", {
 });
 
 function readWeb() {
+  console.log("readWeb");
   puppeteer
     .launch()
     .then(function (browser) {
@@ -54,21 +55,9 @@ function readWeb() {
 }
 
 app.get("/", function (req, res) {
-  // fs.readFile(__dirname + "/log.txt", (error, data) => {
-  //   if (error) {
-  //     throw error;
-  //   }
-  //   res.send("test\n" + data);
-  //   console.log(data.toString());
-  // });
-
   res.sendFile(__dirname + "/log.txt");
-  console.log("get");
+  console.log("get file");
 });
-
-// app.get("/", function (req, res) {
-//   res.send("hello world");
-// });
 
 setInterval(readWeb, 1 * 60000);
 
