@@ -9,7 +9,6 @@ const cors = require("cors");
 require("dotenv").config();
 
 app.use(cors());
-app.use(express.json());
 
 var logger = fs.createWriteStream("log.txt", {
   flags: "a", // 'a' means appending (old data will be preserved)
@@ -55,7 +54,15 @@ function readWeb() {
 }
 
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/log.txt");
+  fs.readFile(__dirname + "/log.txt", (error, data) => {
+    if (error) {
+      throw error;
+    }
+    res.send("test\n" + data);
+    console.log(data.toString());
+  });
+
+  // res.sendFile(__dirname + "/log.txt");
 });
 
 // app.get("/", function (req, res) {
