@@ -18,7 +18,7 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/log.txt");
   console.log("get file");
 });
-setInterval(readWeb, 1 * 60000);
+setInterval(readWeb, 25 * 60000);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`server has started on port ${process.env.PORT}`);
