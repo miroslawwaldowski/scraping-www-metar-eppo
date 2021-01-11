@@ -54,15 +54,15 @@ function readWeb() {
 }
 
 app.get("/", function (req, res) {
-  fs.readFile(__dirname + "/log.txt", (error, data) => {
-    if (error) {
-      throw error;
-    }
-    res.send("test\n" + data);
-    console.log(data.toString());
-  });
+  // fs.readFile(__dirname + "/log.txt", (error, data) => {
+  //   if (error) {
+  //     throw error;
+  //   }
+  //   res.send("test\n" + data);
+  //   console.log(data.toString());
+  // });
 
-  // res.sendFile(__dirname + "/log.txt");
+  res.sendFile(__dirname + "/log.txt");
 });
 
 // app.get("/", function (req, res) {
