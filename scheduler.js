@@ -38,9 +38,17 @@ async function readWeb() {
     data = data + ($(this).text() + "\n");
   });
   console.log(data);
+
   fs.appendFile("log.txt", data, function (err) {
     if (err) throw err;
     console.log("Saved!");
+  });
+
+  fs.readFile("log.txt", "utf8", function (err, data2) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(data2);
   });
 
   browser.close();
