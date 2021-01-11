@@ -54,13 +54,13 @@ function readWeb() {
     });
 }
 
-// app.get("/", function (req, res) {
-//   res.sendFile(__dirname + "/log.txt");
-// });
-
 app.get("/", function (req, res) {
-  res.send("hello world");
+  res.sendFile(__dirname + "/log.txt");
 });
+
+// app.get("/", function (req, res) {
+//   res.send("hello world");
+// });
 
 setInterval(readWeb, 1 * 60000);
 
