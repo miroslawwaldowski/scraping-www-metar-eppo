@@ -29,7 +29,13 @@ async function readWeb() {
   const browser = await puppeteer.launch({
     headless: true,
     defaultViewport: null,
-    args: ["--incognito", "--no-sandbox", "--single-process", "--no-zygote"],
+    args: [
+      "--incognito",
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(url);
