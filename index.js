@@ -63,6 +63,7 @@ app.get("/", function (req, res) {
   // });
 
   res.sendFile(__dirname + "/log.txt");
+  console.log("get");
 });
 
 // app.get("/", function (req, res) {
