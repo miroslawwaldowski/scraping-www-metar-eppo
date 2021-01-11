@@ -58,5 +58,6 @@ async function readWeb() {
     console.log($(this).text());
     logger.write($(this).text() + " \n");
   });
+
   browser.close();
 }
