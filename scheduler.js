@@ -38,6 +38,10 @@ async function readWeb() {
     data = data + ($(this).text() + "\n");
   });
   console.log(data);
+  fs.appendFile("log.txt", data, function (err) {
+    if (err) throw err;
+    console.log("Saved!");
+  });
 
   browser.close();
 }
