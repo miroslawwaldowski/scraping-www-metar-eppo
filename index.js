@@ -1,14 +1,21 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
-require("dotenv").config();
+const pool = require("./db/db");
 
 app.use(cors());
+app.use(express.json());
 
-app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/log.txt");
-  console.log("get file");
+app.get("/", async (req, res) => {
+  try {
+    const sql = "SELECT * FROM devices eppo";
+    const all = await pool.query(sql);
+    res.json(all.rows);
+  } catch (err) {
+    console.log(err.massage);
+  }
 });
 
 app.listen(process.env.PORT || 5000, () => {
