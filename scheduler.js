@@ -1,11 +1,10 @@
 const puppeteer = require("puppeteer");
 const $ = require("cheerio");
 const url = "https://pl.allmetsat.com/metar-taf/polska.php?icao=EPPO";
-const fs = require("fs");
+const pool = require("./db/db");
 
 async function readWeb() {
   console.log("readWeb");
-  var data;
   const browser = await puppeteer.launch({
     headless: true,
     defaultViewport: null,
@@ -20,36 +19,28 @@ async function readWeb() {
   const page = await browser.newPage();
   await page.goto(url);
   const html = await page.content();
+  var temperature;
+  var humidity;
+  var pressure;
+  var time_stamp;
   $(".c1b > div:nth-child(5)  > b:nth-child(1)", html).each(function () {
     var delta = Number($(this).text());
-    var time = new Date(Date.now() - delta * 60000).toISOString();
-    data = time + " ; ";
+    time_stamp = new Date(Date.now() - delta * 60000).toISOString();
   });
   $(".c1b > div:nth-child(7)  > b:nth-child(1)", html).each(function () {
-    console.log($(this).text());
-    data = data + ($(this).text() + " ; ");
+    temperature = $(this).text();
   });
   $(".c1b > div:nth-child(8)  > b:nth-child(1)", html).each(function () {
-    console.log($(this).text());
-    data = data + ($(this).text() + " ; ");
+    humidity = $(this).text();
   });
   $(".c1b > div:nth-child(9)  > b:nth-child(1)", html).each(function () {
-    console.log($(this).text());
-    data = data + ($(this).text() + "\n");
-  });
-  console.log(data);
-
-  fs.appendFile("log.txt", data, function (err) {
-    if (err) throw err;
-    console.log("Saved!");
+    pressure = $(this).text();
   });
 
-  fs.readFile("log.txt", "utf8", function (err, data2) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log(data2);
-  });
+  await pool.query(
+    "INSERT INTO eppo (time_stamp, temperature, humidity, pressure) VALUES($1, $2, $3, $4) RETURNING *",
+    [time_stamp, temperature, humidity, pressure]
+  );
 
   browser.close();
 }

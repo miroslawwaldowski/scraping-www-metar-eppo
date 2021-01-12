@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
   try {
-    const sql = "SELECT * FROM devices eppo";
+    const sql = "SELECT * FROM eppo";
     const all = await pool.query(sql);
     res.json(all.rows);
   } catch (err) {
